@@ -74,6 +74,29 @@ MODELS = [
           r"\bmdx\b", [(2007, 2013, 83.5, 42.9, 15.0), (2014, 2020, 90.9, 43.4, 15.8)]),
     Model("rdx", "Acura", "RDX", "Luxury compact SUV", "5", "acura-rdx", "acura/rdx", "acura/rdx",
           r"\brdx\b", [(2007, 2012, 60.6, 27.8, None), (2013, 2018, 61.3, 26.1, None)]),
+    # Sedans have no fold-flat figure, so max and row2 are both the trunk.
+    Model("rogue", "Nissan", "Rogue", "Compact SUV", "5", "nissan-rogue", "nissan/rogue", "nissan/rogue",
+          r"\brogue\b(?!\s?-?sport\b)",
+          [(2008, 2013, 57.9, 28.9, None), (2014, 2020, 70.0, 39.3, None), (2021, 2030, 74.1, 36.5, None)]),
+    Model("altima", "Nissan", "Altima", "Midsize sedan", "5", "nissan-altima", "nissan/altima", "nissan/altima",
+          r"\baltima\b",
+          [(2007, 2012, 15.3, 15.3, None), (2013, 2018, 15.4, 15.4, None), (2019, 2030, 15.4, 15.4, None)]),
+    Model("sentra", "Nissan", "Sentra", "Compact sedan", "5", "nissan-sentra", "nissan/sentra", "nissan/sentra",
+          r"\bsentra\b",
+          [(2007, 2012, 13.1, 13.1, None), (2013, 2019, 15.1, 15.1, None), (2020, 2030, 14.3, 14.3, None)]),
+    Model("murano", "Nissan", "Murano", "Midsize SUV", "5", "nissan-murano", "nissan/murano", "nissan/murano",
+          r"\bmurano\b", [(2009, 2014, 64.0, 31.6, None), (2015, 2024, 67.0, 32.1, None)]),
+    Model("pathfinder", "Nissan", "Pathfinder", "3-row SUV", "7", "nissan-pathfinder", "nissan/pathfinder",
+          "nissan/pathfinder", r"\bpathfinder\b",
+          [(2005, 2012, 79.2, 49.2, 16.5), (2013, 2020, 79.8, 47.8, 16.0), (2022, 2030, 80.5, 45.0, 16.6)]),
+    Model("quest", "Nissan", "Quest", "Minivan", "7", "nissan-quest", "nissan/quest", "nissan/quest",
+          r"\bquest\b", [(2011, 2017, 108.4, 63.6, 25.7)]),
+    # Includes the Versa Note hatchback; cargo figures are for the sedan.
+    Model("versa", "Nissan", "Versa", "Subcompact", "5", ("nissan-versa", "nissan-versa_note"),
+          ("nissan/versa", "nissan/versa-note"), ("nissan/versa", "nissan/versa-note"), r"\bversa\b",
+          [(2007, 2011, 13.8, 13.8, None), (2012, 2019, 14.9, 14.9, None), (2020, 2030, 15.0, 15.0, None)]),
+    Model("kicks", "Nissan", "Kicks", "Small crossover", "5", "nissan-kicks", "nissan/kicks", "nissan/kicks",
+          r"\bkicks\b", [(2018, 2030, 53.1, 25.3, None)]),
 ]
 
 BY_KEY = {m.key: m for m in MODELS}
@@ -84,7 +107,9 @@ AUTOJUNKET = {
     "sienna": "toyota-sienna", "odyssey": "honda-odyssey", "highlander": "toyota-highlander",
     "pilot": "honda-pilot", "4runner": "toyota-4runner", "rav4": "toyota-rav4", "crv": "honda-cr-v",
     "venza": "toyota-venza", "prius": "toyota-prius", "element": "honda-element", "rx": "lexus-rx", "gx": "lexus-gx",
-    "mdx": "acura-mdx", "rdx": "acura-rdx",
+    "mdx": "acura-mdx", "rdx": "acura-rdx", "rogue": "nissan-rogue", "altima": "nissan-altima",
+    "sentra": "nissan-sentra", "murano": "nissan-murano", "pathfinder": "nissan-pathfinder", "versa": "nissan-versa",
+    "kicks": "nissan-kicks",
 }
 AUTOJUNKET_YEARS = {"venza": {2012}, "element": {2010}}
 

@@ -11,10 +11,13 @@ home_area = "Austin, TX"
 timezone = "America/Chicago"
 # Hours of the day (24-hour, in timezone) when run_daily.sh does a run. Cron calls it every hour.
 run_hours = [7, 16]
+# Show cargo space (cubic feet) on the report cards and in notifications.
+show_cargo = true
 
 [search]
 # Vehicles to search for. Keys and cargo specs live in finder/models.py:
-# sienna, odyssey, highlander, pilot, 4runner, rav4, crv, venza, priusv, prius, element, rx, gx, mdx, rdx
+# sienna, odyssey, highlander, pilot, 4runner, rav4, crv, venza, priusv, prius, element, rx, gx, mdx, rdx,
+# rogue, altima, sentra, murano, pathfinder, quest, versa, kicks
 models = ["sienna", "odyssey", "highlander", "pilot", "4runner", "rav4", "crv", "venza", "priusv", "prius", "element",
           "rx", "gx", "mdx", "rdx"]
 origin_name = "McNeil Dr & US-183, Austin"
@@ -28,6 +31,8 @@ price_min = 6000
 price_max = 10000
 # Listings this far outside the price range are kept as "near misses".
 near_miss_margin = 500
+# Report-page "Within N mi" filter choices: [driving miles, place name shown in brackets or ""].
+distance_filters = [[30, ""], [90, "San Antonio"], [180, "Houston"], [220, "DFW"]]
 
 [deals]
 # Cars.com is searched across this wider price band to learn what each model/year/mileage sells for.
