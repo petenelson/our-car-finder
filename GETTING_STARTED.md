@@ -150,8 +150,8 @@ A few bits of content are still written for the original setup. They're harmless
 Deal scores need at least 15 price observations per model over the last 45 days, so a new model shows no deal
 label for its first run or two.
 
-Nissan models (Rogue, Altima, Sentra, Murano, Pathfinder, Quest, Versa, Kicks) are also defined; add their keys
-to `models` to search them. Other makes should work the same way, since every site is searched by make
+Nissan models (Rogue, Altima, Sentra, Murano, Pathfinder, Quest, Versa, Kicks) and sedans (Camry, Corolla, Avalon,
+Accord, Civic, Lexus ES) are also defined; add their keys to `models` to search them. Other makes should work the same way, since every site is searched by make
 and model.
 
 ## 6. Optional features

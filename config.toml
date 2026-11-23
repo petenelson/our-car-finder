@@ -17,7 +17,7 @@ show_cargo = true
 [search]
 # Vehicles to search for. Keys and cargo specs live in finder/models.py:
 # sienna, odyssey, highlander, pilot, 4runner, rav4, crv, venza, priusv, prius, element, rx, gx, mdx, rdx,
-# rogue, altima, sentra, murano, pathfinder, quest, versa, kicks
+# rogue, altima, sentra, murano, pathfinder, quest, versa, kicks, camry, corolla, avalon, accord, civic, es
 models = ["sienna", "odyssey", "highlander", "pilot", "4runner", "rav4", "crv", "venza", "priusv", "prius", "element",
           "rx", "gx", "mdx", "rdx"]
 origin_name = "McNeil Dr & US-183, Austin"

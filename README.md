@@ -1,6 +1,6 @@
 # Minivan Finder
 
-Daily search for used Toyota, Honda, Lexus, Acura and Nissan cars ($6–10k, 2011+, under 150k miles, within 250 driving
+Daily search for used Toyota, Honda, Lexus, Acura and Nissan cars and SUVs ($6–10k, 2011+, under 150k miles, within 250 driving
 miles of McNeil Dr & US-183 in Austin). New matches and price drops go to your phone through ntfy, and a
 report page is published to GitHub Pages.
 
