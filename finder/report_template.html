@@ -177,7 +177,7 @@ button:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid
 .seen { font-size: 12px; color: var(--muted); }
 .empty { padding: 48px 20px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: 10px; }
 .empty strong { display: block; font: 700 22px var(--font-display); color: var(--ink); margin-bottom: 4px; }
-.alertlink { margin: 10px 0 0; font-size: 14px; }
+.alertlink { margin: 10px 0 0; font-size: 14px; display: flex; flex-wrap: wrap; gap: 6px 22px; }
 .alertlink a { color: var(--accent); font-weight: 600; text-underline-offset: 3px; }
 .notes { margin-top: 36px; color: var(--muted); font-size: 13px; max-width: 80ch; display: grid; gap: 6px; }
 .notes-sub { display: grid; gap: 6px; }
@@ -200,7 +200,7 @@ th { font-weight: 600; color: var(--ink); }
     <p class="terms" id="terms"></p>
     <div class="tally" id="tally"></div>
     <div class="health" id="health" aria-label="Sites checked"></div>
-    <p class="alertlink"><a href="alerts.html">Get new listings on your phone →</a></p>
+    <p class="alertlink"><a href="alerts.html">Get new listings on your phone →</a>__GUIDE_LINK__</p>
   </header>
 
   <div class="bar">
