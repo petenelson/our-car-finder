@@ -22,10 +22,11 @@ SALES = {
     "rav4": 330_000, "crv": 330_000, "venza": 40_000, "priusv": 25_000, "prius": 140_000, "element": 15_000,
     "rx": 100_000, "gx": 25_000, "mdx": 55_000, "rdx": 45_000,
     "rogue": 280_000, "altima": 270_000, "sentra": 200_000, "murano": 65_000, "pathfinder": 65_000, "quest": 12_000,
-    "versa": 110_000, "kicks": 60_000,
+    "versa": 110_000, "kicks": 60_000, "camry": 380_000, "corolla": 300_000, "avalon": 50_000, "accord": 320_000,
+    "civic": 320_000, "es": 60_000,
 }
 # NHTSA files complaints under one name per variant; the RX uses the RX 350, its main version.
-NHTSA_NAMES = {"crv": "CR-V", "priusv": "PRIUS V", "4runner": "4RUNNER", "rx": "RX350", "gx": "GX460"}
+NHTSA_NAMES = {"crv": "CR-V", "priusv": "PRIUS V", "4runner": "4RUNNER", "rx": "RX350", "gx": "GX460", "es": "ES350"}
 
 # Common problems reported for each generation (first year, last year, note).
 KNOWN_ISSUES = {
@@ -72,6 +73,25 @@ KNOWN_ISSUES = {
               (2012, 2019, "CVT failures are common. Nissan extended the CVT warranty on some years, so ask a Nissan dealer to check the VIN."),
               (2020, 2030, "Few widespread problems reported.")],
     "kicks": [(2018, 2030, "Few widespread problems reported; it uses a CVT, so ask for fluid-change records.")],
+    "camry": [(2007, 2011, "The 2007–2009 2.4L 4-cylinder can burn oil, and dashboards can turn sticky in the heat. Otherwise durable."),
+              (2012, 2017, "Few widespread problems reported for this generation."),
+              (2018, 2030, "Some complaints about the 8-speed's shifting on early years; otherwise few widespread problems.")],
+    "corolla": [(2009, 2013, "Very few widespread problems; known for lasting a long time."),
+                (2014, 2019, "Few widespread problems reported for this generation."),
+                (2020, 2030, "Few widespread problems reported.")],
+    "avalon": [(2005, 2012, "Few widespread problems; same durable V6 as the Camry. Dashboards can turn sticky in the heat."),
+               (2013, 2018, "Few widespread problems reported for this generation."),
+               (2019, 2022, "Few widespread problems reported.")],
+    "accord": [(2008, 2012, "The 4-cylinder can burn oil (2008–2011), and the V6's cylinder deactivation (VCM) is linked to oil burning and misfires. Rear brakes wear quickly."),
+               (2013, 2017, "Early CVT cars can judder (Honda updated the software); some starter and A/C complaints."),
+               (2018, 2022, "The 1.5L turbo can dilute oil with fuel (mostly in cold climates); some infotainment glitches.")],
+    "civic": [(2006, 2011, "On 2006–2009, the engine block can crack and leak coolant. A/C compressor failures are common."),
+              (2012, 2015, "Few widespread problems reported for this generation."),
+              (2016, 2021, "A/C condenser failures (2016–2018) and, on the 1.5L turbo, oil diluted with fuel in cold climates."),
+              (2022, 2030, "Few widespread problems reported.")],
+    "es": [(2007, 2012, "Dashboards can turn sticky or crack in the heat (Lexus ran a replacement program); otherwise few widespread problems."),
+           (2013, 2018, "Few widespread problems reported for this generation."),
+           (2019, 2030, "Few widespread problems; some owners dislike the touchpad infotainment control.")],
 }
 
 LABELS = {5: "Excellent", 4: "Above average", 3: "Average", 2: "Below average", 1: "Poor"}

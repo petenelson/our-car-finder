@@ -97,6 +97,25 @@ MODELS = [
           [(2007, 2011, 13.8, 13.8, None), (2012, 2019, 14.9, 14.9, None), (2020, 2030, 15.0, 15.0, None)]),
     Model("kicks", "Nissan", "Kicks", "Small crossover", "5", "nissan-kicks", "nissan/kicks", "nissan/kicks",
           r"\bkicks\b", [(2018, 2030, 53.1, 25.3, None)]),
+    Model("camry", "Toyota", "Camry", "Midsize sedan", "5", "toyota-camry", "toyota/camry", "toyota/camry",
+          r"\bcamry\b",
+          [(2007, 2011, 15.0, 15.0, None), (2012, 2017, 15.4, 15.4, None), (2018, 2030, 15.1, 15.1, None)]),
+    Model("corolla", "Toyota", "Corolla", "Compact sedan", "5", "toyota-corolla", "toyota/corolla", "toyota/corolla",
+          r"\bcorolla\b(?!\s?-?cross\b)",
+          [(2009, 2013, 12.3, 12.3, None), (2014, 2019, 13.0, 13.0, None), (2020, 2030, 13.1, 13.1, None)]),
+    Model("avalon", "Toyota", "Avalon", "Full-size sedan", "5", "toyota-avalon", "toyota/avalon", "toyota/avalon",
+          r"\bavalon\b",
+          [(2005, 2012, 14.4, 14.4, None), (2013, 2018, 16.0, 16.0, None), (2019, 2022, 16.1, 16.1, None)]),
+    Model("accord", "Honda", "Accord", "Midsize sedan", "5", "honda-accord", "honda/accord", "honda/accord",
+          r"\baccord\b(?!\s?-?crosstour\b)",
+          [(2008, 2012, 14.0, 14.0, None), (2013, 2017, 15.8, 15.8, None), (2018, 2022, 16.7, 16.7, None)]),
+    Model("civic", "Honda", "Civic", "Compact sedan", "5", "honda-civic", "honda/civic", "honda/civic",
+          r"\bcivic\b",
+          [(2006, 2011, 12.0, 12.0, None), (2012, 2015, 12.5, 12.5, None), (2016, 2021, 15.1, 15.1, None),
+           (2022, 2030, 14.8, 14.8, None)]),
+    Model("es", "Lexus", "ES", "Luxury midsize sedan", "5", "lexus-es_350", "lexus/es-350", "lexus/es-350",
+          r"\bes\s?-?(?:350|300h)\b|\blexus\s+es\b",
+          [(2007, 2012, 14.7, 14.7, None), (2013, 2018, 15.2, 15.2, None), (2019, 2030, 13.9, 13.9, None)]),
 ]
 
 BY_KEY = {m.key: m for m in MODELS}
@@ -109,7 +128,8 @@ AUTOJUNKET = {
     "venza": "toyota-venza", "prius": "toyota-prius", "element": "honda-element", "rx": "lexus-rx", "gx": "lexus-gx",
     "mdx": "acura-mdx", "rdx": "acura-rdx", "rogue": "nissan-rogue", "altima": "nissan-altima",
     "sentra": "nissan-sentra", "murano": "nissan-murano", "pathfinder": "nissan-pathfinder", "versa": "nissan-versa",
-    "kicks": "nissan-kicks",
+    "kicks": "nissan-kicks", "camry": "toyota-camry", "corolla": "toyota-corolla", "avalon": "toyota-avalon",
+    "accord": "honda-accord", "civic": "honda-civic", "es": "lexus-es",
 }
 AUTOJUNKET_YEARS = {"venza": {2012}, "element": {2010}}
 
