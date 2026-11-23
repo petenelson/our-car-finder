@@ -5,7 +5,7 @@ import shutil
 from html import escape
 from pathlib import Path
 
-from .config import general
+from .config import ROOT, general
 from .models import autojunket_url
 
 TEMPLATE = Path(__file__).with_name("report_template.html")
@@ -72,7 +72,12 @@ def build_report(db, cfg, models, site_dir, thumbs_dir, now):
     }
     payload = json.dumps({"meta": meta, "items": items}, separators=(",", ":")).replace("</", "<\\/")
     title = escape(general(cfg)["title"])
-    html = TEMPLATE.read_text().replace("__TITLE__", title).replace("__DATA__", payload)
+    # Link the generations guide once scripts/generations.py --publish has put one on the site.
+    pub = cfg.get("publish", {})
+    guide = ROOT / pub.get("checkout", "pages") / pub.get("path", "docs") / "generations" / "index.html"
+    guide_link = '<a href="generations/">Compare model years and generations →</a>' if guide.exists() else ""
+    html = (TEMPLATE.read_text().replace("__TITLE__", title).replace("__GUIDE_LINK__", guide_link)
+            .replace("__DATA__", payload))
     out = site_dir / "index.html"
     out.write_text(html)
     build_alerts_page(cfg, site_dir)
