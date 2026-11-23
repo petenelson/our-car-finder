@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 from finder.config import general, load_config  # noqa: E402
 from finder.guide_notes import BOTTOM, GENS  # noqa: E402
-from finder.models import BY_KEY, autojunket_url  # noqa: E402
+from finder.models import BY_KEY, autojunket_url, enabled  # noqa: E402
 from finder.reliability import Reliability  # noqa: E402
 
 PUBLISH = "--publish" in sys.argv
@@ -29,6 +29,8 @@ matches = [x for x in rows if x["tier"] == "match" and x.get("year")
 cfg = load_config()
 REPORT = cfg["publish"].get("page_url", "")
 TITLE = general(cfg)["title"]
+SHOW_CARGO = bool(general(cfg)["show_cargo"])
+MIN_YEAR = cfg["search"]["min_year"]
 _s = cfg["search"]
 CRITERIA = (f'${_s["price_min"] / 1000:g}–{_s["price_max"] / 1000:g}k, {_s["min_year"]}+, '
             f'under {_s["max_mileage"] / 1000:g}k miles, within {_s["radius_miles"]} miles of {_s["origin_name"]}')
@@ -63,10 +65,10 @@ for key, gens in GENS.items():
         miles = [x["mileage"] for x in cars if x.get("mileage")]
         deals = [x for x in cars if (x.get("deal") or {}).get("label") in ("great", "good")]
         best = min(cars, key=lambda x: (-(x.get("deal") or {}).get("pct", 0) if x.get("deal") else 0, x["price"]))
-        cargo = m.cargo_for(lo) if lo >= 2011 else m.cargo_for(years[0])
+        cargo = m.cargo_for(lo) if lo >= MIN_YEAR else m.cargo_for(years[0])
         # Per-year reliability across the matched years of this generation.
         yr_rows, star_vals = [], []
-        for y in range(max(lo, 2011), min(hi, dt.date.today().year) + 1):
+        for y in range(max(lo, MIN_YEAR), min(hi, dt.date.today().year) + 1):
             r = rel.rating(key, y)
             if not r or not r.get("stars"):
                 continue
@@ -99,7 +101,7 @@ for key, gens in GENS.items():
           <dt>Drive</dt><dd>{e(g["drive"])}</dd>
           <dt>Features</dt><dd>{e(g["features"])}</dd>
           <dt>Updates</dt><dd>{e(g["changes"])}</dd>
-          <dt>Cargo</dt><dd>{e(cargo_txt)} · seats {e(m.seats)}</dd>
+          {f"<dt>Cargo</dt><dd>{e(cargo_txt)} · seats {e(m.seats)}</dd>" if SHOW_CARGO else f"<dt>Seats</dt><dd>{e(m.seats)}</dd>"}
           <dt>Known issues</dt><dd>{e(issues)}</dd>
           <dt>Before you buy</dt><dd>{e(g["check"])}</dd>
         </dl>
@@ -120,11 +122,16 @@ for key, gens in GENS.items():
     </section>""")
 
 overview.sort(key=lambda o: -o["n"])
+# Searched models left out of the guide, and why.
+no_notes = [m.model for m in enabled(cfg) if m.key not in GENS]
+no_matches = [m.model for m in enabled(cfg) if m.key in GENS and not any(x["model_key"] == m.key for x in matches)]
+not_included = "".join(f'<p><b>{label}:</b> {e(", ".join(names))}.</p>' for label, names in
+                       (("No current matches", no_matches), ("No generation notes yet", no_notes)) if names)
 ov_rows = "".join(
     f'<tr><td><a href="#{o["key"]}">{e(o["model"])}</a><small>{e(o["gen"])} · {o["years"]}</small></td>'
     f'<td class="n">{o["n"]}</td><td class="n">{money(o["med"])}</td>'
     f'<td class="n">{f"{o[chr(109)+chr(105)+chr(108)+chr(101)+chr(115)]/1000:.0f}k" if o["miles"] else "—"}</td>'
-    f'<td class="n">{o["cargo"]["max"] if o["cargo"] else "—"}</td>'
+    + (f'<td class="n">{o["cargo"]["max"] if o["cargo"] else "—"}</td>' if SHOW_CARGO else "") +
     f'<td>{stars(round(o["stars"])) if o["stars"] else "—"} <small>{o["stars"] or ""}</small></td>'
     f'<td class="n">{o["deals"] or "–"}</td></tr>'
     for o in overview)
@@ -192,7 +199,7 @@ dd {{ margin:0; }}
   <div class="overview">
     <h2>At a glance</h2>
     <div class="tbl"><table>
-      <thead><tr><th>Model / generation</th><th class="n">Matches</th><th class="n">Median price</th><th class="n">Median miles</th><th class="n">Max cargo (cu ft)</th><th>Avg reliability</th><th class="n">Good/great deals</th></tr></thead>
+      <thead><tr><th>Model / generation</th><th class="n">Matches</th><th class="n">Median price</th><th class="n">Median miles</th>{'<th class="n">Max cargo (cu ft)</th>' if SHOW_CARGO else ""}<th>Avg reliability</th><th class="n">Good/great deals</th></tr></thead>
       <tbody>{ov_rows}</tbody>
     </table></div>
   </div>
@@ -201,7 +208,7 @@ dd {{ margin:0; }}
 
   <div class="notes">
     <p><b>Reliability:</b> stars come from NHTSA owner complaints per 10,000 vehicles sold for each model year, ranked against every model year in the search (airbag complaints excluded). Greyed rows are years with no current listings. Sales figures are approximate, so treat stars as a guide. The ↗ links open Autojunket's report for that year; its scores are its own estimates.</p>
-    <p><b>Not included:</b> 4Runner (only two "matches", a 2023 and a 2026 at under $10k, which are almost certainly bait listings), Element, and GX 460 (no current matches).</p>
+    {not_included}
     <p>Specs are for the common U.S. versions and vary slightly by trim. Verify any specific car with a pre-purchase inspection and a VIN recall check at nhtsa.gov/recalls.</p>
   </div>
 </div>
@@ -235,8 +242,7 @@ if subprocess.run(["git", "-C", str(repo), "diff", "--cached", "--quiet"]).retur
     git("commit", "-m", f"Rebuild the generations guide {dt.date.today().isoformat()}")
     git("push", "origin", cfg["publish"].get("branch", "main"))
 url = cfg["publish"]["page_url"].rstrip("/") + "/generations/"
-n_prius = sum(1 for x in matches if x["model_key"] == "prius")
 Notifier(cfg).send("Generations guide updated",
-                   f"Rebuilt with today's matches: {len(sections)} models, including {n_prius} regular Prius listings.\n{url}",
+                   f"Rebuilt with today's matches: {len(sections)} models, {len(matches)} listings.\n{url}",
                    tags="blue_book", report_button=False, ops=True)
 print("published", url)
