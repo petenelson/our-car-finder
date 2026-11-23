@@ -155,4 +155,12 @@ BOTTOM = {
     "rx": "A luxury Highlander for 5; rare in this budget.",
     "mdx": "Most luxury for the money, with 3 rows and SH-AWD; budget for the timing belt.",
     "rdx": "Lots of listings. The 2013+ V6 is the safer bet over the 1st-gen turbo.",
+    "rogue": "Lots of listings and cheaper than a CR-V or RAV4 of the same age, but the CVT is the weak point.",
+    "altima": "A roomy, comfortable sedan for the money; CVT history matters most.",
+    "sentra": "Cheap to buy and run. Check CVT history.",
+    "murano": "A comfortable, quiet 5-seat SUV; less common than the Rogue.",
+    "pathfinder": "A 3-row SUV for less than a Pilot or Highlander; avoid 2013–2014 unless the CVT was replaced.",
+    "quest": "A rare minivan; roomy, but the CVT and sliding doors are the risks.",
+    "versa": "The cheapest car here to buy and run; basic, with a small engine.",
+    "kicks": "A small, thrifty crossover; few will be this cheap.",
 }

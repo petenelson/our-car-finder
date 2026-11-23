@@ -77,11 +77,13 @@ Most changes happen here. Every run reads the file fresh, so there's nothing to 
 | `home_area` | Where you live, e.g. `"Columbus, OH"`. Used in the ask feature's prompt. |
 | `timezone` | Your time zone, e.g. `"America/New_York"`. Sets when runs happen and when the ask limit resets. |
 | `run_hours` | Hours of the day (24-hour) to run, e.g. `[7, 16]` for 7 AM and 4 PM. |
+| `show_cargo` | `false` to hide cargo space on the report and in notifications. |
 | `[search] models` | Which vehicles to search for. Keys must exist in `finder/models.py` (see section 5 to add one). |
 | `origin_name`, `origin_lat`, `origin_lon`, `origin_zip` | Your starting point. Lat/lon set driving distances; the ZIP is what the car sites search around. Get lat/lon by right-clicking a spot in Google Maps. |
 | `radius_miles` | How far you're willing to drive. |
 | `min_year`, `max_mileage` | Oldest model year and highest odometer reading. |
 | `price_min`, `price_max` | Your budget. |
+| `distance_filters` | The report's "Within N mi" choices, as `[miles, "place name"]` pairs. Pick towns near you. |
 | `near_miss_margin` | Cars this many dollars outside the budget still appear, marked "near miss". |
 | `[deals] market_price_min/max` | A wider price band searched on Cars.com only to learn what cars sell for. Set it to roughly budget minus $1k to budget plus $6k. |
 | `[sources]` | Set any site to `false` to skip it. |
@@ -148,7 +150,8 @@ A few bits of content are still written for the original setup. They're harmless
 Deal scores need at least 15 price observations per model over the last 45 days, so a new model shows no deal
 label for its first run or two.
 
-Makes beyond the original Toyota/Honda/Lexus/Acura should work the same way, since every site is searched by make
+Nissan models (Rogue, Altima, Sentra, Murano, Pathfinder, Quest, Versa, Kicks) are also defined; add their keys
+to `models` to search them. Other makes should work the same way, since every site is searched by make
 and model.
 
 ## 6. Optional features
@@ -167,6 +170,10 @@ with no tools, so a question can't change anything. Test it first with
 
 **Generations guide.** `scripts/generations.py OUT.html` builds a page explaining each model's generations, with
 current matches. `--publish` pushes it next to the report. See section 4 for text to rewrite first.
+
+**Phone alerts page.** Every report build also writes `alerts.html`, linked from the top of the report, with
+ntfy setup steps for the people using the finder. It never shows the topic name; it tells them to ask the
+`maintainer` for it.
 
 **Error alerts.** Set `ops_topic` so warnings about a site failing 3 runs in a row, crashed runs and failed
 publishes go somewhere separate from the car notifications.

@@ -177,7 +177,11 @@ button:focus-visible, select:focus-visible, a:focus-visible { outline: 2px solid
 .seen { font-size: 12px; color: var(--muted); }
 .empty { padding: 48px 20px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: 10px; }
 .empty strong { display: block; font: 700 22px var(--font-display); color: var(--ink); margin-bottom: 4px; }
+.alertlink { margin: 10px 0 0; font-size: 14px; }
+.alertlink a { color: var(--accent); font-weight: 600; text-underline-offset: 3px; }
 .notes { margin-top: 36px; color: var(--muted); font-size: 13px; max-width: 80ch; display: grid; gap: 6px; }
+.notes-sub { display: grid; gap: 6px; }
+.notes-sub[hidden] { display: none; }
 .notes h3 { font: 700 18px var(--font-display); color: var(--ink); margin: 0; }
 .tablewrap { overflow-x: auto; }
 table { border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
@@ -196,6 +200,7 @@ th { font-weight: 600; color: var(--ink); }
     <p class="terms" id="terms"></p>
     <div class="tally" id="tally"></div>
     <div class="health" id="health" aria-label="Sites checked"></div>
+    <p class="alertlink"><a href="alerts.html">Get new listings on your phone →</a></p>
   </header>
 
   <div class="bar">
@@ -224,8 +229,8 @@ th { font-weight: 600; color: var(--ink); }
     <div class="row" id="models" role="group" aria-label="Vehicle models"></div>
     <div class="row filters" id="filterpanel">
       <select id="f-price" aria-label="Maximum price"><option value="">Any price</option></select>
-      <select id="f-miles" aria-label="Maximum mileage"><option value="">Any mileage</option><option value="100000">Under 100k mi</option><option value="120000">Under 120k mi</option><option value="140000">Under 140k mi</option><option value="known">Mileage listed</option></select>
-      <select id="f-dist" aria-label="Maximum drive distance"><option value="">Any distance</option><option value="30">Within 30 mi</option><option value="90">Within 90 mi (San Antonio)</option><option value="180">Within 180 mi (Houston)</option><option value="220">Within 220 mi (DFW)</option></select>
+      <select id="f-miles" aria-label="Maximum mileage"><option value="">Any mileage</option><option value="known">Mileage listed</option></select>
+      <select id="f-dist" aria-label="Maximum drive distance"><option value="">Any distance</option></select>
       <select id="f-seller" aria-label="Seller type"><option value="">Dealers and private</option><option value="dealer">Dealers only</option><option value="private">Private sellers only</option></select>
       <select id="f-rows" aria-label="Seating rows"><option value="">2 or 3 rows</option><option value="3">3 rows (7–8 seats)</option><option value="2">2 rows</option></select>
       <select id="f-owners" aria-label="Owners"><option value="">Any owners</option><option value="1">1 owner</option><option value="2">1–2 owners</option></select>
@@ -242,15 +247,17 @@ th { font-weight: 600; color: var(--ink); }
   <p class="row" id="hiddenNote" hidden><button class="linkbtn" id="showHidden"></button></p>
 
   <section class="notes">
+    <div id="cargoNotes" class="notes-sub">
     <h3>Cargo space by model</h3>
     <p>Manufacturer figures in cubic feet for the generations in range. "Max" is behind the front seats with the rear seats folded or removed. The bar on each card is scaled to 160 cu ft, and the tick marks space behind the 2nd row.</p>
     <div class="tablewrap"><table id="cargoTable"></table></div>
+    </div>
     <h3>How reliability is rated</h3>
     <p>Stars come from owner complaints filed with NHTSA (the federal safety agency) for each model year, per 10,000 vehicles sold, ranked against every model year in this search: the fewest complaints get 5 stars, the most get 1. Airbag complaints are left out because most follow the Takata recall rather than how a car holds up. Sales figures are rough averages, so treat the stars as a guide. The recall count is for the model year; check a specific car's VIN at nhtsa.gov/recalls for open recalls. Known-issue notes summarize commonly reported problems for each generation. The Autojunket link opens that site's report for the model year (problem areas and mileage danger zones); its scores are its own estimates and don't affect these stars.</p>
     <h3>Number of owners</h3>
     <p>Cars.com dealer listings show Experian AutoCheck's owner count ("2+" means more than one), accident count and title status, marked "History · AutoCheck". Otherwise it's shown when a listing says so: CarMax's one-owner badge (from the vehicle history report), the owner count Facebook sellers fill in, or wording like "one owner" in a title or description. Sellers' own claims aren't verified, so confirm with a Carfax or AutoCheck report. The owners filter hides listings that don't say.</p>
     <h3>How deals are rated</h3>
-    <p>Each run records the asking price, year and mileage of every listing of these models, including a wider $5k–$16k sample from Cars.com and all of CarMax. A price curve per model, fitted to the last 45 days, gives the expected price for a car's year and mileage. Autotrader listings use Kelley Blue Book's fair purchase price instead. <b>Great deal</b> means at least 15% under expected (or $1,500 under and 7.5% under). <b>Good deal</b> means at least 7% under (or $700 and 3.5%). More than 40% under is marked <b>Too good to be true?</b>: on Facebook especially, that is usually a down-payment ad or a scam. A listing that mentions title or mechanical trouble tops out at Good. Unusually cheap private listings can be scams, so see the car and the title before paying anything.</p>
+    <p>Each run records the asking price, year and mileage of every listing of these models, including a wider <span id="marketBand">$5k–$16k</span> sample from Cars.com and all of CarMax. A price curve per model, fitted to the last 45 days, gives the expected price for a car's year and mileage. Autotrader listings use Kelley Blue Book's fair purchase price instead. <b>Great deal</b> means at least 15% under expected (or $1,500 under and 7.5% under). <b>Good deal</b> means at least 7% under (or $700 and 3.5%). More than 40% under is marked <b>Too good to be true?</b>: on Facebook especially, that is usually a down-payment ad or a scam. A listing that mentions title or mechanical trouble tops out at Good. Unusually cheap private listings can be scams, so see the car and the title before paying anything.</p>
     <p id="footer"></p>
   </section>
 </div>
@@ -277,6 +284,18 @@ th { font-weight: 600; color: var(--ink); }
     f: Object.assign({ price: "", miles: "", dist: "", seller: "", rows: "", owners: "", acc: "", rel: "", source: "", q: "" }, store.get("filters", {})),
   };
   const FILTERS = ["price", "miles", "dist", "seller", "rows", "owners", "acc", "rel", "source", "q"];
+  // Mileage choices below the search limit, and distance choices from config.
+  [60000, 80000, 100000, 120000, 140000].filter((m) => m < meta.maxMileage)
+    .forEach((m) => $("f-miles").querySelector('[value="known"]').insertAdjacentHTML("beforebegin", `<option value="${m}">Under ${m / 1000}k mi</option>`));
+  meta.distances.forEach(([mi, place]) =>
+    $("f-dist").insertAdjacentHTML("beforeend", `<option value="${mi}">Within ${mi} mi${place ? ` (${place})` : ""}</option>`));
+  if (!meta.showCargo) {
+    $("sort").querySelector('[value="cargo"]').remove();
+    if (state.sort === "cargo") state.sort = "deal";
+    $("cargoNotes").hidden = true;
+  }
+  const k = (n) => "$" + Math.round(n / 1000) + "k";
+  $("marketBand").textContent = `${k(meta.marketMin)}–${k(meta.marketMax)}`;
   for (let p = meta.priceMin + 500; p <= meta.priceMax + meta.margin; p += 500)
     $("f-price").insertAdjacentHTML("beforeend", `<option value="${p}">Up to ${money(p)}</option>`);
   [...new Set(items.flatMap((i) => Object.keys(i.links)))].sort()
@@ -390,7 +409,7 @@ th { font-weight: 600; color: var(--ink); }
     }
     const drive = i.driveMi != null ? `${i.driveMi} mi${i.driveMin ? ` · ${i.driveMin >= 60 ? Math.floor(i.driveMin / 60) + "h " + (i.driveMin % 60) + "m" : i.driveMin + "m"}` : ""}` : "—";
     const c = i.cargo;
-    const cargo = c ? `<div class="cargo">
+    const cargo = c && meta.showCargo ? `<div class="cargo">
         <div class="cargo-top"><span>Cargo space</span><strong>${c.max} cu ft</strong></div>
         <div class="meter" role="img" aria-label="${c.max} cubic feet maximum"><i style="width:${Math.min(100, c.max / 160 * 100)}%"></i><b style="left:${Math.min(100, c.row2 / 160 * 100)}%"></b></div>
         <div class="cargo-rows"><span>Behind 2nd row <em>${c.row2}</em></span>${c.row3 ? `<span>Behind 3rd row <em>${c.row3}</em></span>` : ""}<span>Seats <em>${esc(i.seats)}</em></span></div>
@@ -416,6 +435,7 @@ th { font-weight: 600; color: var(--ink); }
           <div><dt>Drive from home</dt><dd>${drive}</dd></div>
           <div><dt>Location</dt><dd>${esc(i.city || "Unknown")}</dd></div>
           <div><dt>Seller</dt><dd>${esc(i.seller || "—")}</dd></div>
+          ${meta.showCargo ? "" : `<div><dt>Body · seats</dt><dd>${esc(i.body || "—")} · ${esc(i.seats || "?")}</dd></div>`}
           ${i.history ? `<div class="wide"><dt>History · ${esc(i.history)}</dt><dd>${[i.owners && `${esc(i.owners)} owner${i.owners === "1" ? "" : "s"}`, i.accidents != null && (i.accidents === 0 ? "No accidents" : i.accidents === "reported" ? "Accident reported" : `${i.accidents} accident${i.accidents === 1 ? "" : "s"}`), i.titleStatus && `${esc(i.titleStatus.toLowerCase())} title`].filter(Boolean).join(" · ")}</dd></div>`
             : i.owners ? `<div><dt>Owners</dt><dd>${esc(i.owners)} owner${i.owners === "1" ? "" : "s"}</dd></div>` : ""}
         </dl>

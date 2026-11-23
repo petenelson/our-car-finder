@@ -29,6 +29,8 @@ def publish(cfg, root, site):
         out = repo / pub.get("path", "docs")
         out.mkdir(exist_ok=True)
         shutil.copy2(site / "index.html", out / "index.html")
+        if (site / "alerts.html").exists():
+            shutil.copy2(site / "alerts.html", out / "alerts.html")
         dst = out / "thumbs"
         dst.mkdir(exist_ok=True)
         want = {p.name for p in (site / "thumbs").glob("*.jpg")}

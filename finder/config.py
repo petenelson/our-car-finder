@@ -23,7 +23,7 @@ def load_config():
 def general(cfg):
     """The [general] section with defaults filled in."""
     return {"title": "Car Finder", "maintainer": "the person who runs it", "home_area": "",
-            "timezone": "America/Chicago", "run_hours": [7, 16], **cfg.get("general", {})}
+            "timezone": "America/Chicago", "run_hours": [7, 16], "show_cargo": True, **cfg.get("general", {})}
 
 
 def timezone(cfg):

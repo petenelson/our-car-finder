@@ -14,7 +14,7 @@ def fmt_money(n):
     return f"${n:,.0f}" if n else "?"
 
 
-def describe(x):
+def describe(x, show_cargo=True):
     bits = [fmt_money(x["price"])]
     bits.append(f'{x["mileage"] / 1000:.0f}k mi' if x.get("mileage") else "miles unknown")
     where = x.get("city") or "location unknown"
@@ -26,7 +26,7 @@ def describe(x):
     if x.get("accidents") is not None:
         bits.append("no accidents" if x["accidents"] == 0 else "accident reported" if x["accidents"] == "reported"
                     else f'{x["accidents"]} accident{"" if x["accidents"] == 1 else "s"}')
-    if x.get("cargo"):
+    if x.get("cargo") and show_cargo:
         bits.append(f'cargo {x["cargo"]["max"]:.0f} cu ft')
     r = x.get("reliability") or {}
     if r.get("stars"):
@@ -59,6 +59,7 @@ class Notifier:
         self.ops_url = f'{n["server"].rstrip("/")}/{n["ops_topic"]}' if n.get("ops_topic") else self.url
         self.report_url = cfg.get("publish", {}).get("page_url") or None
         self.title = general(cfg)["title"]
+        self.show_cargo = bool(general(cfg)["show_cargo"])
         self.enabled = enabled and bool(n.get("topic"))
         self.http = requests.Session()
 
@@ -100,7 +101,7 @@ class Notifier:
                 label, tag, prio = "New match", "red_car", 4
             else:
                 label, tag, prio = "New near-miss", "small_orange_diamond", 3
-            self.send(f"{label}: {headline(x)}", describe(x), click=next(iter(x["links"].values()), None),
+            self.send(f"{label}: {headline(x)}", describe(x, self.show_cargo), click=next(iter(x["links"].values()), None),
                       tags=tag, attach=x.get("image_url"), priority=prio)
         rest = items[MAX_INDIVIDUAL:]
         if rest:
@@ -111,7 +112,7 @@ class Notifier:
         drops = [(x, p) for x, p in drops if not is_suspect(x)]
         for x, old_price in drops[:MAX_INDIVIDUAL]:
             self.send(f"Price drop: {headline(x)}",
-                      f'{fmt_money(old_price)} → {describe(x)}',
+                      f'{fmt_money(old_price)} → {describe(x, self.show_cargo)}',
                       click=next(iter(x["links"].values()), None), tags="chart_with_downwards_trend",
                       attach=x.get("image_url"))
 

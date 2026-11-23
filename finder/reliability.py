@@ -21,6 +21,8 @@ SALES = {
     "sienna": 120_000, "odyssey": 115_000, "highlander": 170_000, "pilot": 140_000, "4runner": 100_000,
     "rav4": 330_000, "crv": 330_000, "venza": 40_000, "priusv": 25_000, "prius": 140_000, "element": 15_000,
     "rx": 100_000, "gx": 25_000, "mdx": 55_000, "rdx": 45_000,
+    "rogue": 280_000, "altima": 270_000, "sentra": 200_000, "murano": 65_000, "pathfinder": 65_000, "quest": 12_000,
+    "versa": 110_000, "kicks": 60_000,
 }
 # NHTSA files complaints under one name per variant; the RX uses the RX 350, its main version.
 NHTSA_NAMES = {"crv": "CR-V", "priusv": "PRIUS V", "4runner": "4RUNNER", "rx": "RX350", "gx": "GX460"}
@@ -52,6 +54,24 @@ KNOWN_ISSUES = {
             (2014, 2020, "2016+ 9-speed transmission draws rough-shifting complaints. Timing belt is due about every 105k miles.")],
     "rdx": [(2007, 2012, "The turbo 4-cylinder can need turbo work and burn oil at high mileage."),
             (2013, 2018, "V6 cylinder deactivation is linked to oil burning and misfires; timing belt is due about every 105k miles.")],
+    "rogue": [(2008, 2013, "The CVT transmission is the big risk: whining, shuddering and failures. Ask for CVT fluid-change records."),
+              (2014, 2020, "Owners report CVT shudder and failures, and 2017+ automatic emergency braking that triggers for no reason.")],
+    "altima": [(2007, 2012, "CVT failures are common, and the electronic steering lock can fail and stop the car starting. Nissan extended the CVT warranty on some years, so ask a Nissan dealer to check the VIN."),
+               (2013, 2018, "CVT shudder and failures are the main complaint, worst on 2013–2015. Nissan extended the CVT warranty on some years, so ask a Nissan dealer to check the VIN."),
+               (2019, 2030, "Owners report automatic emergency braking that triggers for no reason; CVT complaints continue.")],
+    "sentra": [(2007, 2012, "CVT failures are the main risk. Nissan extended the CVT warranty on some years, so ask a Nissan dealer to check the VIN."),
+               (2013, 2019, "CVT shudder and failures are common. Nissan extended the CVT warranty on some years, so ask a Nissan dealer to check the VIN."),
+               (2020, 2030, "Fewer CVT complaints than earlier years; some automatic-braking false alarms.")],
+    "murano": [(2009, 2014, "CVT failures at higher mileage are the main risk."),
+               (2015, 2024, "CVT complaints, though fewer than in Nissan's smaller cars.")],
+    "pathfinder": [(2005, 2012, "On 2005–2010, the radiator can leak coolant into the automatic transmission and ruin it; check that the radiator was replaced."),
+                   (2013, 2020, "CVT shudder and failures, mostly 2013–2014. Nissan extended the CVT warranty on some years, so ask a Nissan dealer to check the VIN."),
+                   (2022, 2030, "Few widespread problems reported yet.")],
+    "quest": [(2011, 2017, "CVT failures and power sliding-door problems. Sold in small numbers, so parts and repair know-how are thinner.")],
+    "versa": [(2007, 2011, "CVT failures are the main risk on CVT cars; manual and 4-speed automatic versions are simpler."),
+              (2012, 2019, "CVT failures are common. Nissan extended the CVT warranty on some years, so ask a Nissan dealer to check the VIN."),
+              (2020, 2030, "Few widespread problems reported.")],
+    "kicks": [(2018, 2030, "Few widespread problems reported; it uses a CVT, so ask for fluid-change records.")],
 }
 
 LABELS = {5: "Excellent", 4: "Above average", 3: "Average", 2: "Below average", 1: "Poor"}
