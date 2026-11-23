@@ -57,6 +57,7 @@ for key, gens in GENS.items():
     gen_html = []
     for g in gens:
         lo, hi = g["years"]
+        span = f"{lo}–{'now' if hi >= 2030 else hi}"
         cars = [x for x in mine if lo <= x["year"] <= hi]
         if not cars:
             continue
@@ -84,7 +85,7 @@ for key, gens in GENS.items():
                        if a <= years[0] <= b), "")
         med_miles = statistics.median(miles) if miles else None
         avg_st = round(sum(star_vals) / len(star_vals), 1) if star_vals else None
-        overview.append(dict(model=f"{m.make} {m.model}", key=key, gen=g["name"], years=f"{lo}–{hi}",
+        overview.append(dict(model=f"{m.make} {m.model}", key=key, gen=g["name"], years=span,
                              n=len(cars), lo=min(prices), hi=max(prices), med=statistics.median(prices),
                              miles=med_miles, cargo=cargo, stars=avg_st, deals=len(deals)))
         cargo_txt = (f'{cargo["max"]} cu ft max · {cargo["row2"]} behind 2nd row'
@@ -93,7 +94,7 @@ for key, gens in GENS.items():
         gen_html.append(f"""
       <div class="gen">
         <div class="gen-head">
-          <h3>{e(g["name"])} <span>{lo}–{hi}</span></h3>
+          <h3>{e(g["name"])} <span>{span}</span></h3>
           <div class="pill">{len(cars)} match{"es" if len(cars) != 1 else ""} · {money(min(prices))}–{money(max(prices))}{f" · median {med_miles/1000:.0f}k mi" if med_miles else ""}{f" · {len(deals)} good/great deal{'s' if len(deals) != 1 else ''}" if deals else ""}</div>
         </div>
         <dl>
